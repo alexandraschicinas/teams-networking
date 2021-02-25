@@ -1,12 +1,12 @@
 [
   {
-    "firstName": "Alexandra",
-    "lastName": "Chicinas",
-    "github": "https://github.com/alexandraschicinas"
+    "members": "Alexandra Chicinas",
+    "projectName": "MovieApp",
+    "projectUrl": "https://github.com/alexandraschicinas"
   },
   {
-    "firstName": "Ionut",
-    "lastName": "Chicinas",
-    "github": "https://github.com/alexandraschicinas"
+    "members": "Adela Nica",
+    "projectName": "DeliveryApp",
+    "projectUrl": "https://github.com/alexandraschicinas"
   }
 ]

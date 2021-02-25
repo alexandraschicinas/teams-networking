@@ -8,8 +8,10 @@ table {
     border: solid 1px;
 }
 
-tr tr {
+th {
     border: solid black 1px;
+    color:white;
+    background-color: blue;
 }
 
 input {
