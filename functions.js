@@ -1,19 +1,29 @@
-fetch ( "persons.json")
+let allTeams = [];
+
+function getHtmlTeams(teams){
+    return teams.map(team => {
+        return  `<tr>
+                    <td> ${team.members}</td>
+                    <td> ${team.name}</td>
+                    <td> ${team.url} </td>
+                 </tr>`
+                
+    }).join("")
+}
+
+function showTeams(teams){	
+    const html = getHtmlTeams(teams);
+
+    const allTeamsHtml = document.querySelector("tbody");
+    allTeamsHtml.innerHTML = html;
+}
+
+fetch ( "teams.json")
 .then(response => response.json())
-.then( function(persons) {
-    console.warn("done",persons);
-    showAllMembers(persons);
+.then(teams => {
+    allTeams = teams;
+    showTeams(allTeams)
 });
 
-function showAllMembers(persons){	
-    let allTeams = persons.map( person => {
-        return `<td> ${person.members}</td>,
-                <td> ${person.projectName}</td>,
-                <td> ${person.projectUrl} </td>`
-    })
-    let allTeamsHtml = document.querySelector(".members td");
-    console.log(allTeamsHtml);
-    allTeamsHtml.innerHTML = allTeams.join(" ")
-   
-}
-showAllMembers(allMembersHtml);	
+
+	
