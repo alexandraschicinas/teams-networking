@@ -22,12 +22,16 @@ function showTeams(teams){
     allTeamsHtml.innerHTML = html;
 }
 
-fetch ("http://localhost:3000/teams-json")
-    .then(response => response.json())
-    .then(teams => {
-        allTeams = teams;
-        showTeams(allTeams)
-});
+function loadTeams() {
+    fetch ("http://localhost:3000/teams-json")
+        .then(response => response.json())
+        .then(teams => {
+            allTeams = teams;
+            showTeams(allTeams)
+        });
+}
+loadTeams();
+
 
 function addTeam(team) {
     console.warn("team:" , );
@@ -40,7 +44,9 @@ function addTeam(team) {
     })
         .then(response => response.json())
         .then(status => {
-            console.warn("saved", status);
+            if(status.success){
+                window.location.reload();
+            } 
         });
 }
 
@@ -59,12 +65,18 @@ function saveTeam() {
 
 function removeTeam(id){
     fetch("http://localhost:3000/teams-json/delete", {
-  method: "DELETE",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({ id })
-});
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ id })
+        })
+        .then(response => response.json())
+        .then(status => {
+            if(status.success){
+                loadTeams();
+            }
+        });
 }
 
 
