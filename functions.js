@@ -8,7 +8,7 @@ function getHtmlTeams(teams){
                     <td> ${team.url} </td>
                     <td> 
                         <a href= "#" class = "remove-btn" data-id = "${team.id}"> &#10006; </a> 
-                        <a href = "#"  class = "edit-btn"> &#9998; </a>
+                        <a href = "#"  class = "edit-btn" data-id = "${team.id}"> &#9998; </a>
                         </td>
                  </tr>`
                 
@@ -69,8 +69,8 @@ function removeTeam(id){
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ id })
-        })
+        body: JSON.stringify({id:id})
+    })
         .then(response => response.json())
         .then(status => {
             if(status.success){
@@ -84,7 +84,25 @@ document.querySelector('table tbody').addEventListener("click", e => {
     if(e.target.matches("a.remove-btn") ) {
         const id = e.target.getAttribute('data-id');
         removeTeam(id);
+    } else if(e.target.matches("a.edit-btn") ){
+        const id = e.target.getAttribute('data-id');
+        console.warn("edit?", id)
     }
 })
+
+function updateTeam() {
+    fetch("http://localhost:3000/teams-json/update", {
+  method: "PUT",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    id: "fedcba1610310163146",
+    members: "UpdatedName",
+    name: "Name",
+    url: "https://github.com/nmatei/teams-networking"
+  })
+});
+}
 
 	
