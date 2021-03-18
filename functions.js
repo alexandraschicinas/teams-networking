@@ -19,17 +19,20 @@ function showTeams(teams){
     allTeamsHtml.innerHTML = html;
 }
 
-fetch ("teams.json")
-.then(response => response.json())
-.then(teams => {
-    allTeams = teams;
-    showTeams(allTeams)
+fetch ("http://localhost:3000/teams-json")
+    .then(response => response.json())
+    .then(teams => {
+        allTeams = teams;
+        showTeams(allTeams)
 });
 
 function addTeam(team) {
     console.warn("team:" , );
-    fetch ( "add.json", {
+    fetch ( "http://localhost:3000/teams-json/create", {
         method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+          },
         body:JSON.stringify(team)
     })
         .then(response => response.json())
@@ -44,11 +47,11 @@ function saveTeam() {
     const url = document.querySelector("input[name = url]").value;
 
     const team = {
-    name: name,
-    members: members,
-    url: url
-};
-addTeam(team);
+        name: name,
+        members: members,
+        url: url
+    };
+    addTeam(team);
 }
 
 
