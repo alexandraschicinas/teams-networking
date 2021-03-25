@@ -14,7 +14,6 @@ function getHtmlTeams(teams){
                 
     }).join("");
 }
-
 function showTeams(teams){	
     const html = getHtmlTeams(teams);
 
@@ -31,7 +30,6 @@ function loadTeams() {
         });
 }
 loadTeams();
-
 
 function addTeam(team) {
     console.warn("team:" , );
@@ -65,11 +63,11 @@ function saveTeam() {
 
 function removeTeam(id){
     fetch("http://localhost:3000/teams-json/delete", {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({id:id})
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({id:id})
     })
         .then(response => response.json())
         .then(status => {
@@ -79,7 +77,6 @@ function removeTeam(id){
         });
 }
 
-
 document.querySelector('table tbody').addEventListener("click", e => {
     if(e.target.matches("a.remove-btn") ) {
         const id = e.target.getAttribute('data-id');
@@ -87,22 +84,20 @@ document.querySelector('table tbody').addEventListener("click", e => {
     } else if(e.target.matches("a.edit-btn") ){
         const id = e.target.getAttribute('data-id');
         console.warn("edit?", id)
+           let editTeam = allTeams.find(team => team.id === id);
+           console.log('edit', editTeam);
     }
 })
 
-function updateTeam() {
-    fetch("http://localhost:3000/teams-json/update", {
-  method: "PUT",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    id: "fedcba1610310163146",
-    members: "UpdatedName",
-    name: "Name",
-    url: "https://github.com/nmatei/teams-networking"
-  })
-});
-}
+
+
+
+    // for( let i =0; i < allTeams.length; i++) {
+    //     if(allTeams[i].id === id) {
+    //         console.log(allTeams[i])
+    //     }
+    // }
+
+
 
 	
