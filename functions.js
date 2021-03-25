@@ -83,20 +83,19 @@ document.querySelector('table tbody').addEventListener("click", e => {
         removeTeam(id);
     } else if(e.target.matches("a.edit-btn") ){
         const id = e.target.getAttribute('data-id');
-        console.warn("edit?", id)
-           let editTeam = allTeams.find(team => team.id === id);
-           console.log('edit', editTeam);
+        
+        let editTeam = allTeams.find(team => team.id === id);
+        setValues(editTeam);
     }
-})
+});
 
+function setValues(team) {
+    console.warn('edit', team);
+     document.querySelector("input[name = members]").value = team.members;
+     document.querySelector("input[name = namep]").value = team.name;
+     document.querySelector("input[name = url]").value = team.url;
+}
 
-
-
-    // for( let i =0; i < allTeams.length; i++) {
-    //     if(allTeams[i].id === id) {
-    //         console.log(allTeams[i])
-    //     }
-    // }
 
 
 
