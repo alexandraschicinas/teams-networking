@@ -1,4 +1,5 @@
 let allTeams = [];
+let editId;
 
 function getHtmlTeams(teams){
     return teams.map(team => {
@@ -48,6 +49,28 @@ function addTeam(team) {
         });
 }
 
+function updateTeam(team) {
+    console.warn("team:" , );
+    fetch ( "http://localhost:3000/teams-json/update", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+          },
+        body: JSON.stringify({
+            id: editId,
+            members: team.members,
+            name: team.name,
+            url: team.url
+          })
+    })
+        .then(response => response.json())
+        .then(status => {
+            if(status.success){
+                window.location.reload();
+            } 
+        });
+}
+
 function saveTeam() {
     const members = document.querySelector("input[name = members]").value;
     const name = document.querySelector("input[name = namep]").value;
@@ -58,7 +81,15 @@ function saveTeam() {
         members: members,
         url: url
     };
-    addTeam(team);
+
+    console.warn(team, editId);
+
+    if(editId) {
+        team.id = editId;
+        updateTeam(team);
+    } else {
+        addTeam(team);
+    };
 }
 
 function removeTeam(id){
@@ -82,18 +113,22 @@ document.querySelector('table tbody').addEventListener("click", e => {
         const id = e.target.getAttribute('data-id');
         removeTeam(id);
     } else if(e.target.matches("a.edit-btn") ){
+        document.getElementById("saveBtn").innerText = "Update";
+
         const id = e.target.getAttribute('data-id');
-        
-        let editTeam = allTeams.find(team => team.id === id);
+        const editTeam = allTeams.find(team => team.id === id);
         setValues(editTeam);
+        editId = id;
+        console.log(editId);
     }
 });
 
 function setValues(team) {
-    console.warn('edit', team);
+     console.warn('edit', team);
      document.querySelector("input[name = members]").value = team.members;
      document.querySelector("input[name = namep]").value = team.name;
      document.querySelector("input[name = url]").value = team.url;
+
 }
 
 
