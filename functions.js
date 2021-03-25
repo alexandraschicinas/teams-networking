@@ -123,13 +123,22 @@ document.querySelector('table tbody').addEventListener("click", e => {
     }
 });
 
+document.getElementById("search"). addEventListener("input" , e => {
+    const text = e.target.value.toLowerCase();
+    const filteredTeam = allTeams.filter(team => {
+       return team.members.toLowerCase().indexOf(text)> - 1
+    })
+    showTeams(filteredTeam)
+})
+
 function setValues(team) {
      console.warn('edit', team);
      document.querySelector("input[name = members]").value = team.members;
      document.querySelector("input[name = namep]").value = team.name;
      document.querySelector("input[name = url]").value = team.url;
-
 }
+
+
 
 
 
