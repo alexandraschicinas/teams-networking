@@ -10,7 +10,7 @@ function getHtmlTeams(teams){
                     <td> 
                         <a href= "#" class = "remove-btn" data-id = "${team.id}"> &#10006; </a> 
                         <a href = "#"  class = "edit-btn" data-id = "${team.id}"> &#9998; </a>
-                        </td>
+                    </td>
                  </tr>`
                 
     }).join("");
@@ -33,7 +33,6 @@ function loadTeams() {
 loadTeams();
 
 function addTeam(team) {
-    console.warn("team:" , );
     fetch ( "http://localhost:3000/teams-json/create", {
         method: "POST",
         headers: {
@@ -82,8 +81,6 @@ function saveTeam() {
         url: url
     };
 
-    console.warn(team, editId);
-
     if(editId) {
         team.id = editId;
         updateTeam(team);
@@ -112,27 +109,29 @@ document.querySelector('table tbody').addEventListener("click", e => {
     if(e.target.matches("a.remove-btn") ) {
         const id = e.target.getAttribute('data-id');
         removeTeam(id);
-    } else if(e.target.matches("a.edit-btn") ){
+    } else if(e.target.matches("a.edit-btn")) {
         document.getElementById("saveBtn").innerText = "Update";
 
         const id = e.target.getAttribute('data-id');
         const editTeam = allTeams.find(team => team.id === id);
         setValues(editTeam);
         editId = id;
-        console.log(editId);
     }
 });
 
 document.getElementById("search"). addEventListener("input" , e => {
     const text = e.target.value.toLowerCase();
     const filteredTeam = allTeams.filter(team => {
-       return team.members.toLowerCase().indexOf(text)> - 1
+       return (
+            team.members.toLowerCase().indexOf(text)> - 1 ||
+            team.name.toLowerCase().indexOf(text) > -1 || 
+            team.url.toLowerCase().indexOf(text) > -1 
+        ); 
     })
     showTeams(filteredTeam)
 })
 
 function setValues(team) {
-     console.warn('edit', team);
      document.querySelector("input[name = members]").value = team.members;
      document.querySelector("input[name = namep]").value = team.name;
      document.querySelector("input[name = url]").value = team.url;
